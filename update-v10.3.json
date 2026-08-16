@@ -1,0 +1,7 @@
+{
+  "version": "0.10.3",
+  "channel": "Stable",
+  "packageUrl": "https://raw.githubusercontent.com/davidstapleton2308/-Ultimate-PC-Copilot-Updates/main/Ultimate-PC-Copilot-v10.3-Updater-Test.zip",
+  "sha256": "1ae463b6a7aa4182653e579321d6848901888e85bc3d5e716213726f1b11d30d",
+  "notes": "Updater TLS test. This release proves the permanent GitHub self-update channel works."
+}
