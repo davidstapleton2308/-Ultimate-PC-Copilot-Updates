@@ -1,7 +1,1 @@
-{
-  "version": "0.10.1",
-  "channel": "Stable",
-  "packageUrl": "https://raw.githubusercontent.com/davidstapleton2308/-Ultimate-PC-Copilot-Updates/main/Ultimate-PC-Copilot-v10.1-ChannelTest.zip",
-  "sha256": "62bfbb25f0026df9a9fb252b47ea77ac5e809fb4581b71ff76cd81a18332d2ee",
-  "notes": "Permanent updater channel test. No security behavior changes in this release."
-}
+
