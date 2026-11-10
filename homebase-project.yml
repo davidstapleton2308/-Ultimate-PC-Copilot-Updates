@@ -19,4 +19,8 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.homebase.personal.app
         INFOPLIST_KEY_CFBundleDisplayName: Homebase
+        INFOPLIST_KEY_NSCameraUsageDescription: Scan the QR code displayed by Homebase Companion on your Windows laptop.
+        INFOPLIST_KEY_NSLocalNetworkUsageDescription: Connect securely to your paired Windows laptop over your local Wi-Fi.
+        MARKETING_VERSION: 1.1.0
+        CURRENT_PROJECT_VERSION: 2
         CODE_SIGNING_ALLOWED: NO
