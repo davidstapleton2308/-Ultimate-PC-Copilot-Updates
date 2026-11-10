@@ -1,4 +1,4 @@
-name: Homebase iOS IPA
+name: Homebase iOS and Windows Companion
 on:
   push:
     branches:
@@ -32,6 +32,33 @@ jobs:
       - name: Upload IPA
         uses: actions/upload-artifact@v4
         with:
-          name: Homebase-IPA
+          name: Homebase-iOS-IPA
           path: dist/Homebase-unsigned.ipa
+          retention-days: 30
+
+  windows-companion:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Windows packaging dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --disable-pip-version-check pyinstaller cryptography psutil "qrcode[pil]" pillow
+      - name: Validate source
+        shell: pwsh
+        run: python -m py_compile windows/HomebaseCompanion.py
+      - name: Package Homebase Companion
+        shell: pwsh
+        run: |
+          python -m PyInstaller --noconfirm --clean --onefile --windowed --name HomebaseCompanion --collect-all cryptography windows/HomebaseCompanion.py
+          if (!(Test-Path "dist/HomebaseCompanion.exe")) { throw "Missing executable" }
+      - name: Upload Windows Companion
+        uses: actions/upload-artifact@v4
+        with:
+          name: Homebase-Windows-Companion
+          path: dist/HomebaseCompanion.exe
           retention-days: 30
