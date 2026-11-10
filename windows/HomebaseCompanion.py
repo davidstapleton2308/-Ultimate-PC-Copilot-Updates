@@ -310,6 +310,7 @@ class Window(tk.Tk):
         self.ip = local_ip()
         self.fp = fingerprint()
         self.image = None
+        self.pairing_data = ""
         self.code = rotate_pair()
         self.make_ui()
         self.update_pairing()
@@ -339,6 +340,8 @@ class Window(tk.Tk):
         tk.Button(self, text="Refresh pairing QR", command=self.update_pairing,
                   bg="#1a4d2c", fg="white", activebackground="#2c7043",
                   font=("Segoe UI", 10), relief="flat", padx=18, pady=9).pack(pady=12)
+        tk.Button(self, text="Copy pairing data", command=self.copy_pair_data,
+                  bg="#15241b", fg="#73dfa1", relief="flat", padx=18, pady=8).pack(pady=(0, 6))
         tk.Label(self, text="Phone and laptop must be on the same Wi-Fi.\n"
                            "Allow Homebase on Private networks in Windows Firewall.\n"
                            "Never forward port 47655 to the internet.",
@@ -349,6 +352,7 @@ class Window(tk.Tk):
         self.code = rotate_pair()
         value = json.dumps({"v": 1, "ip": self.ip, "port": PORT,
                             "fp": self.fp, "code": self.code}, separators=(",", ":"))
+        self.pairing_data = value
         graphic = qrcode.QRCode(border=2, box_size=5, error_correction=qrcode.constants.ERROR_CORRECT_M)
         graphic.add_data(value)
         graphic.make(fit=True)
@@ -358,6 +362,11 @@ class Window(tk.Tk):
         self.pin_label.configure(text="Pairing PIN: " + self.code)
         self.ip_label.configure(text="Laptop address: " + self.ip + ":" + str(PORT))
         self.expire_label.configure(text="QR expires in 5 minutes")
+
+    def copy_pair_data(self):
+        self.clipboard_clear()
+        self.clipboard_append(self.pairing_data)
+        self.update()
 
     def tick(self):
         remaining = int(state["pair_ends"] - time.time())
