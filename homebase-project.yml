@@ -1,0 +1,22 @@
+name: Homebase
+options:
+  bundleIdPrefix: com.homebase.personal
+  deploymentTarget:
+    iOS: '15.0'
+settings:
+  base:
+    SWIFT_VERSION: '5.0'
+    IPHONEOS_DEPLOYMENT_TARGET: '15.0'
+    TARGETED_DEVICE_FAMILY: '1,2'
+    CODE_SIGNING_ALLOWED: NO
+    GENERATE_INFOPLIST_FILE: YES
+targets:
+  Homebase:
+    type: application
+    platform: iOS
+    sources: [Homebase]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.homebase.personal.app
+        INFOPLIST_KEY_CFBundleDisplayName: Homebase
+        CODE_SIGNING_ALLOWED: NO

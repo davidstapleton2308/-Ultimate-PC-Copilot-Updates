@@ -1,0 +1,37 @@
+name: Homebase iOS IPA
+on:
+  push:
+    branches:
+      - homebase-ipa-build
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  ios-ipa:
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Build Homebase
+        shell: bash
+        run: |
+          set -euo pipefail
+          xcodegen generate --spec homebase-project.yml
+          xcodebuild -project Homebase.xcodeproj -scheme Homebase \
+            -configuration Release -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath "$RUNNER_TEMP/HomebaseDerivedData" \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build
+          mkdir -p "$RUNNER_TEMP/pack/Payload" dist
+          cp -R "$RUNNER_TEMP/HomebaseDerivedData/Build/Products/Release-iphoneos/Homebase.app" "$RUNNER_TEMP/pack/Payload/"
+          test -f "$RUNNER_TEMP/pack/Payload/Homebase.app/Homebase"
+          cd "$RUNNER_TEMP/pack"
+          zip -qr "$GITHUB_WORKSPACE/dist/Homebase-unsigned.ipa" Payload
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: Homebase-IPA
+          path: dist/Homebase-unsigned.ipa
+          retention-days: 30
