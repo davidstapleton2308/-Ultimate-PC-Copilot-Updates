@@ -193,6 +193,7 @@ struct HomeTabs: View {
     var body: some View {
         TabView {
             Overview().tabItem { Label("Home", systemImage: "house.fill") }
+            LaptopDashboard().tabItem { Label("Laptop", systemImage: "laptopcomputer") }
             Devices().tabItem { Label("Devices", systemImage: "square.grid.2x2.fill") }
             Scenes().tabItem { Label("Scenes", systemImage: "sparkles") }
             HomeSettings().tabItem { Label("Settings", systemImage: "gearshape.fill") }
